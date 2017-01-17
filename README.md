@@ -31,21 +31,21 @@ flow is defined as
 The proposed workaround is:
 
 1. have apache2 turn the X509 user cert data to header 
-via mod_headers:
+   via mod_headers:
 
        <Location /idp/Authn/External>
          SSLVerifyClient require
          SSLVerifyDepth 5
          SSLOptions -StdEnvVars +ExportCertData
-	     RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"
-         RequestHeader set SSL_CLIENT_I_DN "%{SSL_CLIENT_I_DN}s"
-         RequestHeader set SSL_CLIENT_M_SERIAL "%{SSL_CLIENT_M_SERIAL}s"
-         RequestHeader set SSL_CLIENT_CERT "%{SSL_CLIENT_CERT}s"
-         RequestHeader set SSL_CLIENT_VERIFY "%{SSL_CLIENT_VERIFY}s"
+	      RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"
+          RequestHeader set SSL_CLIENT_I_DN "%{SSL_CLIENT_I_DN}s"
+          RequestHeader set SSL_CLIENT_M_SERIAL "%{SSL_CLIENT_M_SERIAL}s"
+          RequestHeader set SSL_CLIENT_CERT "%{SSL_CLIENT_CERT}s"
+          RequestHeader set SSL_CLIENT_VERIFY "%{SSL_CLIENT_VERIFY}s"
        </Location>
     
 2. write a specialized ExternalAuthnConfiguration to 
-deal with this case.
+   deal with this case.
 
 ##Enable a External auth method on idp3
 
@@ -53,6 +53,7 @@ deal with this case.
 
        <bean id="authn/External" parent="shibboleth.AuthenticationFlow"
          p:nonBrowserSupported="false" />
+         
    after bean with id="authn/Password".
    
    This is required to enable it as ExtendedFlow on Password
