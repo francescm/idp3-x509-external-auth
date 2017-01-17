@@ -1,0 +1,37 @@
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'java'
+
+
+
+repositories {
+    mavenCentral()
+    maven { url 'https://build.shibboleth.net/nexus/content/groups/public' }
+}
+
+dependencies {
+    compile "org.codehaus.groovy:groovy-all:${project.'groovy.version'}"
+    compile "javax.servlet:javax.servlet-api:${project.'javax-servlet.version'}"
+    compile "net.shibboleth.idp:idp-authn-api:${project.'shibboleth.version'}"
+    compile "net.shibboleth.idp:idp-authn-impl:${project.'shibboleth.version'}"
+    compile "net.shibboleth.idp:idp-session-api:${project.'shibboleth.version'}"
+    compile "net.shibboleth.idp:idp-profile-impl:${project.'shibboleth.version'}"
+    compile "net.shibboleth.idp:idp-attribute-api:${project.'shibboleth.version'}"
+    compile "net.shibboleth.idp:idp-attribute-resolver-api:${project.'shibboleth.version'}"
+    compile "net.shibboleth.idp:idp-attribute-resolver-spring:${project.'shibboleth.version'}"
+    compile "net.shibboleth.idp:idp-profile-api:${project.'shibboleth.version'}"
+    compile "org.opensaml:opensaml-profile-api:${project.'opensaml.version'}"
+    compile "org.springframework:spring-context:${project.'spring.version'}"
+    compile "org.springframework:spring-web:${project.'spring.version'}"
+    compile "org.springframework.webflow:spring-webflow:${project.'spring-webflow.version'}"
+    compile "org.slf4j:slf4j-api:${project.'slf4j.version'}"
+    compile "ch.qos.logback:logback-classic:${project.'logback.version'}"
+
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+jar {
+    baseName = 'unimore-x509'
+    version =  '0.1.0'
+}
