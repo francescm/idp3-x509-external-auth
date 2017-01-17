@@ -29,6 +29,7 @@ flow is defined as
     This flow is implemented as a special case of the External    
 
 The proposed workaround is:
+
 1. have apache2 turn the X509 user cert data to header 
 via mod_headers:
 
@@ -49,10 +50,12 @@ deal with this case.
 ##Enable a External auth method on idp3
 
 1. Edit: conf/authn/general-authn.xml and move bean:
-<bean id="authn/External" parent="shibboleth.AuthenticationFlow"
-            p:nonBrowserSupported="false" />
-after bean with id="authn/Password"
-This is required to enable it as ExtendedFlow on Password
+
+       <bean id="authn/External" parent="shibboleth.AuthenticationFlow"
+         p:nonBrowserSupported="false" />
+   after bean with id="authn/Password".
+   
+   This is required to enable it as ExtendedFlow on Password
 2. edit conf/idp.properties and enable External flow:
 
        # Regular expression matching login flows to enable, e.g. IPAddress|Password
