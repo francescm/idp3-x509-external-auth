@@ -48,9 +48,9 @@ flow is defined as
 2. write a specialized ExternalAuthnConfiguration to 
    deal with this case.
 
-##Enable a External auth method on idp3
+##Enable a External auth method on IdPv3
 
-1. Edit: conf/authn/general-authn.xml and move bean:
+1. Edit: `conf/authn/general-authn.xml` and move bean:
 
    ```
        <bean id="authn/External" parent="shibboleth.AuthenticationFlow"
@@ -59,21 +59,22 @@ flow is defined as
    after bean with id="authn/Password".
    
    This is required to enable it as ExtendedFlow on Password
-2. edit conf/idp.properties and enable External flow:
+2. edit `conf/idp.properties` and enable External flow:
 
    ```
        # Regular expression matching login flows to enable, e.g. IPAddress|Password
        #idp.authn.flows= Password
        idp.authn.flows= Password|External
    ``` 
-3. edit conf/authn/password-authn-config.xml to allow Password 
+3. edit `conf/authn/password-authn-config.xml to allow Password 
    flow to call External as ExtendedFlow:
    
    ```
        <bean id="shibboleth.authn.Password.ExtendedFlows"
          class="java.lang.String" c:_0="External" />
    ```      
-4. copy web.xml to edit-webapps:
+4. copy web.xml to edit-webapp (to be safer 
+   at [upgrade time](https://wiki.shibboleth.net/confluence/display/IDP30/Upgrading)):
    
    > cp -v webapp/WEB-INF/web.xml edit-webapp/WEB-INF/web.xml
      
