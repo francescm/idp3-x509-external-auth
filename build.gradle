@@ -29,6 +29,10 @@ dependencies {
 
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: "${project.'mockito.version'}"
+    testCompile group: 'org.powermock', name: 'powermock', version: "${project.'powermock.version'}"
+    testCompile group: 'org.powermock', name: 'powermock-api-mockito2', version: "${project.'powermock.version'}"
+    testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: "${project.'powermock.version'}"
 }
 
 jar {

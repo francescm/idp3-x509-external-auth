@@ -59,13 +59,13 @@ class X509UnimoreAuthServlet extends HttpServlet {
         @Nonnull @NotEmpty final String PASSTHROUGH_PARAM = "x509passthrough";
 
         for (header in httpRequest.getHeaderNames() ) {
-            log.info("header: {}", $it)
-            value = httpRequest.getHeader($it)
+            log.info("header: {}", header)
+            String value = httpRequest.getHeader(header)
             log.info("with value: {}", value)
         }
 
         try {
-            final String key = ExternalAuthentication.startExternalAuthentication(httpRequest);
+            final String key = ExternalAuthentication.startExternalAuthentication(httpRequest)
             
             final String passthrough = httpRequest.getParameter(PASSTHROUGH_PARAM);
             if (passthrough != null && Boolean.parseBoolean(passthrough)) {
