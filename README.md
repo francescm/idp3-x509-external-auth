@@ -28,11 +28,11 @@ flow is defined as
 
     This flow is implemented as a special case of the External    
 
-The proposed workaround is:
+## Proposed workaround
 
 1. have apache2 turn the X509 user cert data to header 
    via mod_headers:
-
+   ```
        <Location /idp/Authn/External>
          SSLVerifyClient require
          SSLVerifyDepth 5
@@ -43,38 +43,38 @@ The proposed workaround is:
           RequestHeader set SSL_CLIENT_CERT "%{SSL_CLIENT_CERT}s"
           RequestHeader set SSL_CLIENT_VERIFY "%{SSL_CLIENT_VERIFY}s"
        </Location>
-    
+   ``` 
 2. write a specialized ExternalAuthnConfiguration to 
    deal with this case.
 
 ##Enable a External auth method on idp3
 
 1. Edit: conf/authn/general-authn.xml and move bean:
-
+   ```
        <bean id="authn/External" parent="shibboleth.AuthenticationFlow"
          p:nonBrowserSupported="false" />
-         
+   ```      
    after bean with id="authn/Password".
    
    This is required to enable it as ExtendedFlow on Password
 2. edit conf/idp.properties and enable External flow:
-
+   ```
        # Regular expression matching login flows to enable, e.g. IPAddress|Password
        #idp.authn.flows= Password
        idp.authn.flows= Password|External
-    
+   ``` 
 3. edit conf/authn/password-authn-config.xml to allow Password 
-flow to call External as ExtendedFlow:
-
-       <bean id="shibboleth.authn.Password.ExtendedFlows" 
+   flow to call External as ExtendedFlow:
+   ```
+       <bean id="shibboleth.authn.Password.ExtendedFlows"
          class="java.lang.String" c:_0="External" />
-         
+   ```      
 4. copy web.xml to edit-webapps:
-    
-       cp -v webapp/WEB-INF/web.xml edit-webapp/WEB-INF/web.xml
+   
+   > cp -v webapp/WEB-INF/web.xml edit-webapp/WEB-INF/web.xml
      
    and add, after the X509 authentication stanza:
-
+   ```
        <!-- Servlet protected by container used for External authentication -->
        <servlet>
          <servlet-name>X509ExternalAuthHandler</servlet-name>
@@ -85,3 +85,4 @@ flow to call External as ExtendedFlow:
          <servlet-name>X509ExternalAuthHandler</servlet-name>
          <url-pattern>/Authn/External</url-pattern>
        </servlet-mapping>
+   ```
