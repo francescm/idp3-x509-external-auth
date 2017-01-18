@@ -1,0 +1,21 @@
+<configuration scan="true" scanPeriod="30 seconds">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>logs/x509unimore.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>logs/x509unimore-%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--      <pattern>%date %level [%thread] %logger{10} %msg%n</pattern> -->
+            <Pattern>%date %msg%n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    
+    <logger name="it.unimore.shibboleth" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="FILE" />
+    </logger>
+
+
+</configuration>
