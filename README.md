@@ -32,17 +32,18 @@ flow is defined as
 
 1. have apache2 turn the X509 user cert data to header 
    via mod_headers:
+   
    ```
-       <Location /idp/Authn/External>
-         SSLVerifyClient require
-         SSLVerifyDepth 5
-         SSLOptions -StdEnvVars +ExportCertData
-	      RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"
-          RequestHeader set SSL_CLIENT_I_DN "%{SSL_CLIENT_I_DN}s"
-          RequestHeader set SSL_CLIENT_M_SERIAL "%{SSL_CLIENT_M_SERIAL}s"
-          RequestHeader set SSL_CLIENT_CERT "%{SSL_CLIENT_CERT}s"
-          RequestHeader set SSL_CLIENT_VERIFY "%{SSL_CLIENT_VERIFY}s"
-       </Location>
+   <Location /idp/Authn/External>
+     SSLVerifyClient require
+     SSLVerifyDepth 5
+     SSLOptions -StdEnvVars +ExportCertData
+     RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"
+     RequestHeader set SSL_CLIENT_I_DN "%{SSL_CLIENT_I_DN}s"
+     RequestHeader set SSL_CLIENT_M_SERIAL "%{SSL_CLIENT_M_SERIAL}s"
+     RequestHeader set SSL_CLIENT_CERT "%{SSL_CLIENT_CERT}s"
+     RequestHeader set SSL_CLIENT_VERIFY "%{SSL_CLIENT_VERIFY}s"
+   </Location>
    ``` 
 2. write a specialized ExternalAuthnConfiguration to 
    deal with this case.
@@ -50,6 +51,7 @@ flow is defined as
 ##Enable a External auth method on idp3
 
 1. Edit: conf/authn/general-authn.xml and move bean:
+
    ```
        <bean id="authn/External" parent="shibboleth.AuthenticationFlow"
          p:nonBrowserSupported="false" />
@@ -58,6 +60,7 @@ flow is defined as
    
    This is required to enable it as ExtendedFlow on Password
 2. edit conf/idp.properties and enable External flow:
+
    ```
        # Regular expression matching login flows to enable, e.g. IPAddress|Password
        #idp.authn.flows= Password
@@ -65,6 +68,7 @@ flow is defined as
    ``` 
 3. edit conf/authn/password-authn-config.xml to allow Password 
    flow to call External as ExtendedFlow:
+   
    ```
        <bean id="shibboleth.authn.Password.ExtendedFlows"
          class="java.lang.String" c:_0="External" />
