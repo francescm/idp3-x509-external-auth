@@ -36,12 +36,18 @@ flow is defined as
    ```
    # initialize the special headers to a blank value to avoid 
    #  http header forgeries
-   RequestHeader set SSL_CLIENT_S_DN    ""
+   RequestHeader set SSL_CLIENT_S_DN     ""
+   RequestHeader set SSL_CLIENT_S_DN_CN  ""
    <Location /idp/Authn/External>
      SSLVerifyClient require
      SSLVerifyDepth 5
-     SSLOptions -StdEnvVars +ExportCertData
-     RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"     
+     SSLUserName SSL_CLIENT_S_DN_CN #cosmetic only: 
+                                    # apache2 logs 
+                                    # X509 DN_CN 
+                                    # as username 
+     # SSLOptions -StdEnvVars +ExportCertData
+     RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"
+     RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN_CN}s"
    </Location>
    ``` 
 2. write a specialized ExternalAuthnConfiguration to 
