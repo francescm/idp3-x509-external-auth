@@ -34,15 +34,14 @@ flow is defined as
    via mod_headers:
    
    ```
+   # initialize the special headers to a blank value to avoid 
+   #  http header forgeries
+   RequestHeader set SSL_CLIENT_S_DN    ""
    <Location /idp/Authn/External>
      SSLVerifyClient require
      SSLVerifyDepth 5
      SSLOptions -StdEnvVars +ExportCertData
-     RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"
-     RequestHeader set SSL_CLIENT_I_DN "%{SSL_CLIENT_I_DN}s"
-     RequestHeader set SSL_CLIENT_M_SERIAL "%{SSL_CLIENT_M_SERIAL}s"
-     RequestHeader set SSL_CLIENT_CERT "%{SSL_CLIENT_CERT}s"
-     RequestHeader set SSL_CLIENT_VERIFY "%{SSL_CLIENT_VERIFY}s"
+     RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"     
    </Location>
    ``` 
 2. write a specialized ExternalAuthnConfiguration to 
