@@ -71,7 +71,7 @@ flow is defined as
        #idp.authn.flows= Password
        idp.authn.flows= Password|External
    ``` 
-3. edit `conf/authn/password-authn-config.xml to allow Password 
+3. edit `conf/authn/password-authn-config.xml` to allow Password 
    flow to call External as ExtendedFlow:
    
    ```
