@@ -62,6 +62,7 @@ class X509UnimoreAuthServlet extends HttpServlet {
             log.info("header: {}", header)
             String value = httpRequest.getHeader(header)
             log.info("with value: {}", value)
+            String configLocation = getInitParameter("configLocation")
         }
 
         try {
