@@ -94,7 +94,19 @@ flow is defined as
          class="java.lang.String" c:_0="X509External" />
    ```
    
-   [snapshot of resulting login form](ExtendedFlow.png) when an ExtendedFlow is enables.
+   [snapshot of resulting login form](ExtendedFlow.png) when an 
+   ExtendedFlow is enables.
+   
+4. define the new flow. Create a dir
+   ``
+   $IDP_HOME/flows/authn/X509External
+   ``
+   and copy two files (beans and flow) from the same location on
+   the src/main/resource tree.
+   
+   Copy the configuration file `x509-external-authn-config.xml` to
+   `IDP_HOME/conf/authn`
+   
 4. copy web.xml to edit-webapp (to be safer 
    at [upgrade time](https://wiki.shibboleth.net/confluence/display/IDP30/Upgrading)):
    
