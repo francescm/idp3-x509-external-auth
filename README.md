@@ -96,3 +96,12 @@ flow is defined as
          <url-pattern>/Authn/External</url-pattern>
        </servlet-mapping>
    ```
+5. to deploy, build jar with ``gradle build``,
+  
+       cp -v ~/unimore-x509-0.1.0.jar ./edit-webapp/WEB-INF/lib/
+  
+   re-create the ``war`` with:
+   
+       sudo JAVA_HOME=/usr/lib/jvm/latest ./bin/build.sh
+   
+   and reload jetty
