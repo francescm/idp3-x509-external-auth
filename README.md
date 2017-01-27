@@ -105,3 +105,21 @@ flow is defined as
        sudo JAVA_HOME=/usr/lib/jvm/latest ./bin/build.sh
    
    and reload jetty
+   
+## Yet to be done
+
+1. re-enable the courtesy page (the "please insert smart-card in reader" advice);
+
+2. allow servlet to receive configuration inputs, so some logic can be externalized;
+
+3. username extraction and handling. This is the hardest part. If the smart card is an Italian CNS/CIE, 
+   `SSL_CLIENT_S_DN_CN` contains the Codice Fiscale (Italian taxpayer number). 
+    Shorter path is to define a custom Principal 
+    implementing `net.shibboleth.idp.authn.principal.CloneablePrincipal`
+    and leveraging the `c14n/attribute` canonicalization flow using as activating 
+    condition the custom Principal.
+    
+    But if a single Codice Fiscale is shared by more than one account (the same 
+    person can have a teaching account and an administrative account) and you 
+    need to allow user to choose among usernames, I think a follow-up of the 
+    authentication flow is more appropriate.
