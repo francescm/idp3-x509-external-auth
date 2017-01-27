@@ -77,7 +77,9 @@ flow is defined as
    ```
        <bean id="shibboleth.authn.Password.ExtendedFlows"
          class="java.lang.String" c:_0="External" />
-   ```      
+   ```
+   
+   [snapshot of resulting login form](ExtendedFlow.png) when an ExtendedFlow is enables.
 4. copy web.xml to edit-webapp (to be safer 
    at [upgrade time](https://wiki.shibboleth.net/confluence/display/IDP30/Upgrading)):
    
