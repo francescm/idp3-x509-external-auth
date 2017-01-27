@@ -16,7 +16,7 @@ The apache2 `+ExportCertData` won't work pass
 X509 cert data to jetty on mod_http
  
     <Location /idp/Authn/X509>
-    # tihs does not pass SSLContext via mod_http
+    # this does not pass SSLContext via mod_http
      SSLVerifyClient require
      SSLVerifyDepth 5
      SSLOptions -StdEnvVars +ExportCertData
@@ -53,30 +53,45 @@ flow is defined as
 2. write a specialized ExternalAuthnConfiguration to 
    deal with this case.
 
-##Enable a External auth method on IdPv3
+##Enable a new X509External auth method on IdPv3
 
-1. Edit: `conf/authn/general-authn.xml` and move bean:
+1. Edit: `conf/authn/general-authn.xml` and create a bean:
 
-   ```
-       <bean id="authn/External" parent="shibboleth.AuthenticationFlow"
-         p:nonBrowserSupported="false" />
+   ```       
+       <bean id="authn/X509External" parent="shibboleth.AuthenticationFlow"
+                   p:nonBrowserSupported="false" />
+          <property name="supportedPrincipals">
+              <list>
+                 <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                    c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:X509" />
+                 <bean parent="shibboleth.SAML2AuthnContextClassRef"
+                    c:classRef="urn:oasis:names:tc:SAML:2.0:ac:classes:TLSClient" />
+                 <bean parent="shibboleth.SAML1AuthenticationMethod"
+                    c:method="urn:ietf:rfc:2246" />
+              </list>
+           </property>
+        </bean>
    ```      
    after bean with id="authn/Password".
    
-   This is required to enable it as ExtendedFlow on Password
+   The position in the beans definition is required to enable `X509External` 
+   as a ExtendedFlow on Password.
+   
+   If X509External is defined before `Password`, it will be the choosen 
+   method and `Password` will be skipped.
 2. edit `conf/idp.properties` and enable External flow:
 
    ```
        # Regular expression matching login flows to enable, e.g. IPAddress|Password
        #idp.authn.flows= Password
-       idp.authn.flows= Password|External
+       idp.authn.flows= Password|X509External
    ``` 
 3. edit `conf/authn/password-authn-config.xml` to allow Password 
-   flow to call External as ExtendedFlow:
+   flow to call X509External as ExtendedFlow:
    
    ```
        <bean id="shibboleth.authn.Password.ExtendedFlows"
-         class="java.lang.String" c:_0="External" />
+         class="java.lang.String" c:_0="X509External" />
    ```
    
    [snapshot of resulting login form](ExtendedFlow.png) when an ExtendedFlow is enables.
