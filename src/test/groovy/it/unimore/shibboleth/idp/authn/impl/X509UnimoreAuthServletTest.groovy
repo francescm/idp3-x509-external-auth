@@ -27,6 +27,7 @@ import org.mockito.Mockito
 //import net.shibboleth.idp.authn.context.RequestedPrincipalContext
 import net.shibboleth.idp.authn.ExternalAuthentication
 
+import javax.servlet.ServletConfig
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -39,7 +40,10 @@ class X509UnimoreAuthServletTest {
 
     @Before
     void setUp() {
+        ServletConfig servletConfig = Mockito.mock(ServletConfig.class)
+        when(servletConfig.getInitParameter("configLocation")).thenReturn("/etc/passwd")
         servlet = new X509UnimoreAuthServlet()
+        servlet.init(servletConfig)
     }
 
 
@@ -53,6 +57,7 @@ class X509UnimoreAuthServletTest {
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class)
         HttpServletResponse response = Mockito.mock(HttpServletResponse.class)
         PowerMockito.mockStatic(ExternalAuthentication.class)
+
         when(request.getHeaderNames()).thenReturn(headerNamesEnumerator)
         when(request.getHeader(headerNames.first())).thenReturn(headerValues.first())
         when(ExternalAuthentication.startExternalAuthentication(request)).thenReturn(KEY)

@@ -63,6 +63,7 @@ class X509UnimoreAuthServlet extends HttpServlet {
             String value = httpRequest.getHeader(header)
             log.info("with value: {}", value)
             String configLocation = getInitParameter("configLocation")
+            log.info("configLocation: {}", configLocation)
         }
 
         try {
@@ -79,7 +80,8 @@ class X509UnimoreAuthServlet extends HttpServlet {
             }
             
             final Subject subject = new Subject()
-            Principal principal = new UsernamePrincipal("malvezzi")
+            String dn = httpRequest.getHeader("SSL_CLIENT_S_DN")
+            Principal principal = new UsernamePrincipal(dn)
             subject.getPrincipals().add(principal);
             log.info("created subject: {}", subject)
             log.info("subject principal: {}", principal)
