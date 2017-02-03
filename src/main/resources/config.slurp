@@ -1,3 +1,4 @@
+//stub config file for tests
 X509External.cnTransform.regex=/^([^\/]+)\/.+$/
 X509External.test.dn="MLVFNC69H12B819Z/7430035000001454.Caud0cp/FVmUXl/uO8quWcFGzOQ="
 X509External.test.controlCode="test"

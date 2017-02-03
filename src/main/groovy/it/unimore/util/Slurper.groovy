@@ -14,13 +14,7 @@ class Slurper {
     }
 
     def fetch(key) {
-        slurper[key]
-
-        String dn = "MLVFNC69H12B819Z/7430035000001454.Caud0cp/FVmUXl/uO8quWcFGzOQ="
-        def pattern = /^([^\/]+)\/.+$/
-
-        def matcher = (dn =~ pattern)
-        println matcher
-        println matcher[0][1]
+        def value = Eval.x(slurper, "x.${key}")
+        return value
     }
 }
