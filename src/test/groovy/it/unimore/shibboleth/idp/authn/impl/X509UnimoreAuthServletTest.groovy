@@ -41,7 +41,7 @@ class X509UnimoreAuthServletTest {
     @Before
     void setUp() {
         ServletConfig servletConfig = Mockito.mock(ServletConfig.class)
-        when(servletConfig.getInitParameter("configLocation")).thenReturn("/etc/passwd")
+        when(servletConfig.getInitParameter("configLocation")).thenReturn("src/main/resources/config.slurp")
         servlet = new X509UnimoreAuthServlet()
         servlet.init(servletConfig)
     }
@@ -53,7 +53,7 @@ class X509UnimoreAuthServletTest {
         headerNames.add("SSL_CLIENT_S_DN")
         Enumeration<String> headerNamesEnumerator = Collections.enumeration(headerNames)
         List<String> headerValues = new ArrayList<>()
-        headerValues.add("VOIDCF000X0000")
+        headerValues.add("MLVFNC69H12B819Z/7430035000001454.Caud0cp/FVmUXl/uO8quWcFGzOQ=")
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class)
         HttpServletResponse response = Mockito.mock(HttpServletResponse.class)
         PowerMockito.mockStatic(ExternalAuthentication.class)

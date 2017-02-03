@@ -17,6 +17,8 @@
 
 package it.unimore.shibboleth.idp.authn.impl
 
+import it.unimore.util.Slurper
+
 import groovy.util.logging.Slf4j
 import net.shibboleth.idp.authn.AbstractValidationAction
 import net.shibboleth.idp.authn.AuthnEventIds
@@ -58,12 +60,15 @@ class X509UnimoreAuthServlet extends HttpServlet {
         /** Parameter/cookie for bypassing prompt page. */
         @Nonnull @NotEmpty final String PASSTHROUGH_PARAM = "x509passthrough";
 
+        Slurper slurper
+
         for (header in httpRequest.getHeaderNames() ) {
             log.info("header: {}", header)
             String value = httpRequest.getHeader(header)
             log.info("with value: {}", value)
             String configLocation = getInitParameter("configLocation")
             log.info("configLocation: {}", configLocation)
+            slurper = new Slurper(configLocation)
         }
 
         try {
@@ -80,10 +85,15 @@ class X509UnimoreAuthServlet extends HttpServlet {
             }
             
             final Subject subject = new Subject()
-            String dn = httpRequest.getHeader("SSL_CLIENT_S_DN")
+            String rawDn = httpRequest.getHeader("SSL_CLIENT_S_DN")
+            def pattern = slurper.fetch("X509External.cnTransform.regex")
+            def matcher = (rawDn =~ pattern)
+            def dn = ""
+            if ( matcher[0] ) {
+                dn = matcher[0][1]
+            }
             Principal principal = new UsernamePrincipal(dn)
             subject.getPrincipals().add(principal);
-            log.info("created subject: {}", subject)
             log.info("subject principal: {}", principal)
             httpRequest.setAttribute(ExternalAuthentication.SUBJECT_KEY, subject);
 
