@@ -60,18 +60,15 @@ class X509UnimoreAuthServlet extends HttpServlet {
         /** Parameter/cookie for bypassing prompt page. */
         @Nonnull @NotEmpty final String PASSTHROUGH_PARAM = "x509passthrough";
 
-        Slurper slurper
-
-        for (header in httpRequest.getHeaderNames() ) {
-            log.info("header: {}", header)
-            String value = httpRequest.getHeader(header)
-            log.info("with value: {}", value)
-            String configLocation = getInitParameter("configLocation")
-            log.info("configLocation: {}", configLocation)
-            slurper = new Slurper(configLocation)
-        }
 
         try {
+            Slurper slurper
+            String rawDn = httpRequest.getHeader("SSL_CLIENT_S_DN")
+            log.debug("SSL_CLIENT_S_DN: {}", rawDn)
+            String configLocation = getInitParameter("contextConfigLocation")
+            log.info("contextConfigLocation: {}", configLocation)
+            slurper = new Slurper(configLocation)
+
             final String key = ExternalAuthentication.startExternalAuthentication(httpRequest)
             
             final String passthrough = httpRequest.getParameter(PASSTHROUGH_PARAM);
@@ -85,7 +82,6 @@ class X509UnimoreAuthServlet extends HttpServlet {
             }
             
             final Subject subject = new Subject()
-            String rawDn = httpRequest.getHeader("SSL_CLIENT_S_DN")
             def pattern = slurper.fetch("X509External.cnTransform.regex")
             def matcher = (rawDn =~ pattern)
             def dn = ""

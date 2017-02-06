@@ -41,7 +41,7 @@ class X509UnimoreAuthServletTest {
     @Before
     void setUp() {
         ServletConfig servletConfig = Mockito.mock(ServletConfig.class)
-        when(servletConfig.getInitParameter("configLocation")).thenReturn("src/main/resources/config.slurp")
+        when(servletConfig.getInitParameter("contextConfigLocation")).thenReturn("src/main/resources/config.slurp")
         servlet = new X509UnimoreAuthServlet()
         servlet.init(servletConfig)
     }

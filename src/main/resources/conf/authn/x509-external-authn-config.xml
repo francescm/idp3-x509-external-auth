@@ -13,7 +13,7 @@
        default-destroy-method="destroy">
 
     <!-- Servlet context-relative path to wherever your implementation lives. -->
-    <bean id="shibboleth.authn.External.externalAuthnPath" class="java.lang.String"
+    <bean id="shibboleth.authn.X509External.externalAuthnPath" class="java.lang.String"
         c:_0="contextRelative:Authn/External" />
 
     <!--
@@ -27,12 +27,11 @@
     You would normally only unset this if you plan to return a fully decorated Java Subject from your
     external authentication source.
     -->
-    <util:constant id="shibboleth.authn.External.addDefaultPrincipals" static-field="java.lang.Boolean.TRUE" />
+    <util:constant id="shibboleth.authn.X509External.addDefaultPrincipals" static-field="java.lang.Boolean.TRUE" />
 
-    <!--
-    <bean id="shibboleth.authn.External.matchExpression" class="java.util.regex.Pattern" factory-method="compile"
-        c:_0="^(.+)@example\.edu]$" />
-    -->
+    <!-- expect an Italian taxpayer code -->
+    <bean id="shibboleth.authn.X509External.matchExpression" class="java.util.regex.Pattern" factory-method="compile"
+        c:_0="^[A-Z0-9]{16}$" />
 
     <!--
     Define entries here to map error messages returned by external modules and classify them as particular
@@ -44,7 +43,7 @@
     
     If you want to "fall-through" to other login flows, include a mapping to "ReselectFlow".
     -->
-    <util:map id="shibboleth.authn.X509.ClassifiedMessageMap">
+    <util:map id="shibboleth.authn.X509External.ClassifiedMessageMap">
         <entry key="ReselectFlow">
             <list>
                 <value>NoCredentials</value>

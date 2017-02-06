@@ -21,7 +21,53 @@
         <transition on="proceed" to="CallSubjectCanonicalization" />
     </action-state>
 
-    <!-- This runs a c14n step on the result of the authentication. -->
+    <!-- Check whether identities exist locally -->
+    <action-state id="SearchExistingIdentities">
+        <evaluate expression="environment" result="viewScope.environment" />
+        <evaluate expression="opensamlProfileRequestContext" result="viewScope.profileRequestContext" />
+        <evaluate expression="opensamlProfileRequestContext.getSubcontext(T(net.shibboleth.idp.authn.context.AuthenticationContext))"
+                      result="viewScope.authenticationContext" />
+        <evaluate expression="T(net.shibboleth.utilities.java.support.codec.HTMLEncoder)" result="viewScope.encoder" />
+        <evaluate expression="flowRequestContext.getExternalContext().getNativeRequest()" result="viewScope.request" />
+        <evaluate expression="flowRequestContext.getExternalContext().getNativeResponse()" result="viewScope.response" />
+        <evaluate expression="SearchExistingIdentities"/>
+
+        <!-- How many matching identities found? -->
+        <transition on="none" to="CallSubjectCanonicalization" />
+        <transition on="one" to="CallSubjectCanonicalization" />
+        <transition on="many" to="displayChooseIdentityForm" />
+        <!-- Proceed and terminate current subflow -->
+        <transition to="proceed" />
+    </action-state>
+
+   <!-- Display form to choose linked identity view -->
+    <view-state id="displayChooseIdentityForm" view="chooseId">
+        <on-entry>
+            <evaluate expression="initializeU2fRequest"/>
+        </on-entry>
+        <transition on="proceed" to="CallSubjectCanonicalization"/>
+    </view-state>
+
+    <!-- Perform form processing -->
+    <action-state id="processIdChoiceResponse">
+        <evaluate expression="processIdChoiceResponse"/>
+        <evaluate expression="'proceed'"/>
+        <transition on="proceed" to="CallSubjectCanonicalization"/>
+    </action-state>
+
+    <!-- Perform Identity Choice validation -->
+    <!--
+    <action-state id="validateIdResponse">
+        <evaluate expression="validateIdResponse"/>
+        <evaluate expression="'proceed'"/>
+        <transition on="AccountError" to="displayU2fForm"/>
+        <transition on="InvalidCredentials" to="displayU2fForm"/>
+        <transition on="NoCredentials" to="displayU2fForm" />
+        <transition on="proceed" to="proceed"/>
+    </action-state>
+    -->
+
+
     <subflow-state id="CallSubjectCanonicalization" subflow="c14n">
         <input name="calledAsSubflow" value="true" />
         <transition on="proceed" to="proceed" />
@@ -30,6 +76,6 @@
         <transition on="SubjectCanonicalizationError" to="ReselectFlow" />
     </subflow-state>
 
-    <bean-import resource="external-authn-beans.xml" />
+    <bean-import resource="X509External-beans.xml" />
 
 </flow>

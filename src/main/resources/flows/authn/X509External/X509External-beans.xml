@@ -21,16 +21,21 @@
     <!-- Default strategy function to obtain the external path. -->
     <bean id="shibboleth.authn.External.externalAuthnPathStrategy"
         class="com.google.common.base.Functions" factory-method="constant"
-        c:_0-ref="shibboleth.authn.External.externalAuthnPath" />
+        c:_0-ref="shibboleth.authn.X509External.externalAuthnPath" />
 
-    <import resource="../../../conf/authn/external-authn-config.xml" />
+    <import resource="../../../conf/authn/x509-external-authn-config.xml" />
 
     <bean id="ValidateExternalAuthentication"
             class="net.shibboleth.idp.authn.impl.ValidateExternalAuthentication" scope="prototype"
-            p:matchExpression="#{getObject('shibboleth.authn.External.matchExpression')}"
-            p:addDefaultPrincipals="#{getObject('shibboleth.authn.External.addDefaultPrincipals') ?: true}"
-            p:classifiedMessages-ref="shibboleth.authn.External.ClassifiedMessageMap"
+            p:matchExpression="#{getObject('shibboleth.authn.X509External.matchExpression')}"
+            p:addDefaultPrincipals="#{getObject('shibboleth.authn.X509External.addDefaultPrincipals') ?: true}"
+            p:classifiedMessages-ref="shibboleth.authn.X509External.ClassifiedMessageMap"
             p:resultCachingPredicate="#{getObject('shibboleth.authn.External.resultCachingPredicate')}" />
+
+    <bean id="SearchExistingIdentities"
+          scope="prototype"
+          class="it.unimore.shibboleth.idp.authn.impl.SearchExistingIdentities" />
+
 
     <bean id="PopulateSubjectCanonicalizationContext"
         class="net.shibboleth.idp.authn.impl.PopulateSubjectCanonicalizationContext" scope="prototype"
