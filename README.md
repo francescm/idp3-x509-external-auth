@@ -36,8 +36,13 @@ flow is defined as
    ```
    # initialize the special headers to a blank value to avoid 
    #  http header forgeries
+   # in a Italian CNS/CIE
+   # SSL_CLIENT_S_DN_G is givenName
+   # SSL_CLIENT_S_DN_S is surname
    RequestHeader set SSL_CLIENT_S_DN     ""
    RequestHeader set SSL_CLIENT_S_DN_CN  ""
+   RequestHeader set SSL_CLIENT_S_DN_G  ""
+   RequestHeader set SSL_CLIENT_S_DN_S  ""
    <Location /idp/Authn/External>
      SSLVerifyClient require
      SSLVerifyDepth 5
@@ -47,7 +52,9 @@ flow is defined as
                                     # as username 
      # SSLOptions -StdEnvVars +ExportCertData
      RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"
-     RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN_CN}s"
+     RequestHeader set SSL_CLIENT_S_DN_CN "%{SSL_CLIENT_S_DN_CN}s"
+     RequestHeader set SSL_CLIENT_S_DN_S "%{SSL_CLIENT_S_DN_S}s"
+     RequestHeader set SSL_CLIENT_S_DN_G "%{SSL_CLIENT_S_DN_G}s"
    </Location>
    ``` 
 2. write a specialized ExternalAuthnConfiguration to 
