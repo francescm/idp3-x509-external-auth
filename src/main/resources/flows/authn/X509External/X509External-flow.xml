@@ -20,7 +20,7 @@
 
         <transition on="proceed" to="CallSubjectCanonicalization" />
     </action-state>
-    
+
     <subflow-state id="CallSubjectCanonicalization" subflow="c14n">
         <input name="calledAsSubflow" value="true" />
         <transition on="proceed" to="proceed" />

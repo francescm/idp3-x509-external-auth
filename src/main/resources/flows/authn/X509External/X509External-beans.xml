@@ -31,12 +31,7 @@
             p:addDefaultPrincipals="#{getObject('shibboleth.authn.X509External.addDefaultPrincipals') ?: true}"
             p:classifiedMessages-ref="shibboleth.authn.X509External.ClassifiedMessageMap"
             p:resultCachingPredicate="#{getObject('shibboleth.authn.External.resultCachingPredicate')}" />
-
-    <bean id="SearchExistingIdentities"
-          scope="prototype"
-          class="it.unimore.shibboleth.idp.authn.impl.SearchExistingIdentities" />
-
-
+    
     <bean id="PopulateSubjectCanonicalizationContext"
         class="net.shibboleth.idp.authn.impl.PopulateSubjectCanonicalizationContext" scope="prototype"
         p:availableFlows-ref="shibboleth.PostLoginSubjectCanonicalizationFlows" />
