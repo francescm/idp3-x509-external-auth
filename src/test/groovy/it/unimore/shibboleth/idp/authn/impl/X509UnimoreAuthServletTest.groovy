@@ -4,8 +4,6 @@ package it.unimore.shibboleth.idp.authn.impl
  * Created by francesco on 18/01/17.
  */
 
-//import it.unimore.shibboleth.idp.authn.impl.X509UnimoreAuthServlet
-
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertFalse
 import static org.junit.Assert.assertTrue

@@ -125,6 +125,10 @@ flow is defined as
        <servlet>
          <servlet-name>X509ExternalAuthHandler</servlet-name>
          <servlet-class>it.unimore.shibboleth.idp.authn.impl.X509UnimoreAuthServlet</servlet-class>
+         <init-param>
+               <param-name>contextConfigLocation</param-name>
+               <param-value>/opt/shibboleth-idp/conf/authn/X509External.properties</param-value>
+         </init-param>
          <load-on-startup>4</load-on-startup>
        </servlet>
        <servlet-mapping>
@@ -146,9 +150,7 @@ flow is defined as
 
 1. re-enable the courtesy page (the "please insert smart-card in reader" advice);
 
-2. allow servlet to receive configuration inputs, so some logic can be externalized;
-
-3. username extraction and handling. This is the hardest part. If the smart card is an Italian CNS/CIE, 
+2. username extraction and handling. This is the hardest part. If the smart card is an Italian CNS/CIE, 
    `SSL_CLIENT_S_DN_CN` contains the Codice Fiscale (Italian taxpayer number). 
     Shorter path is to define a custom Principal 
     implementing `net.shibboleth.idp.authn.principal.CloneablePrincipal`

@@ -51,28 +51,5 @@
             </list>
         </entry>
     </util:map>
-<!--
-    <util:map id="shibboleth.authn.External.ClassifiedMessageMap">
-        <entry key="UnknownUsername">
-            <list>
-                <value>UnknownUsername</value>
-            </list>
-        </entry>
-        <entry key="InvalidPassword">
-            <list>
-                <value>InvalidPassword</value>
-            </list>
-        </entry>
-        <entry key="ExpiredPassword">
-            <list>
-                <value>ExpiredPassword</value>
-            </list>
-        </entry>
-        <entry key="ExpiringPassword">
-            <list>
-                <value>ExpiringPassword</value>
-            </list>
-        </entry>
-    </util:map>
--->    
+
 </beans>
