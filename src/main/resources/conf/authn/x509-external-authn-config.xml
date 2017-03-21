@@ -52,4 +52,34 @@
         </entry>
     </util:map>
 
+
+    <bean id="it.unimore.shibboleth.idp.authn.attribute.PrincipalNameLookupStrategy"
+          class="net.shibboleth.idp.profile.context.navigate.ScriptedContextLookupFunction"
+          factory-method="inlineScript">
+        <constructor-arg>
+            <value>
+                <![CDATA[
+                logger = Java.type("org.slf4j.LoggerFactory").getLogger("it.unimore.authn.principalNameLookupStrategy");
+                logger.info("hallo");
+                var principalName = null;
+                var subject = profileContext.getSubcontext("net.shibboleth.idp.authn.context.SubjectCanonicalizationContext").getSubject();
+                var princs = subject.getPrincipals(Java.type("net.shibboleth.idp.authn.principal.UsernamePrincipal").class);
+                logger.info("princs are: {}", princs);
+                if (princs.size() == 1) {
+                    principalName = princs.iterator().next().getName();
+                }
+                logger.info("principalName is: {}", principalName);
+                principalName;
+                ]]>
+            </value>
+        </constructor-arg>
+    </bean>
+
+    <!-- Subject canonicalization flow strategy. -->
+    <bean id="shibboleth.authn.X509External.CanonicalizationFlow" class="java.lang.String"
+          c:_0="shibboleth.PostLoginSubjectCanonicalizationFlows" />
+    <!--
+          c:_0="shibboleth.AccountLinkingCanonicalizationFlows"
+          -->
+
 </beans>

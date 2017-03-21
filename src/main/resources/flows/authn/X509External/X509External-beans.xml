@@ -32,8 +32,14 @@
             p:classifiedMessages-ref="shibboleth.authn.X509External.ClassifiedMessageMap"
             p:resultCachingPredicate="#{getObject('shibboleth.authn.External.resultCachingPredicate')}" />
 
+    <bean id="PopulateSubjectContext"
+          class="net.shibboleth.idp.profile.impl.PopulateSubjectContext"
+          scope="prototype"
+          p:principalNameLookupStrategy="#{getObject('it.unimore.shibboleth.idp.authn.attribute.PrincipalNameLookupStrategy')}" />
+
     <bean id="PopulateSubjectCanonicalizationContext"
         class="net.shibboleth.idp.authn.impl.PopulateSubjectCanonicalizationContext" scope="prototype"
-        p:availableFlows-ref="shibboleth.PostLoginSubjectCanonicalizationFlows" />
+          p:availableFlows-ref="#{getObject('shibboleth.authn.X509External.CanonicalizationFlow')}"
+         />
 
 </beans>

@@ -18,6 +18,12 @@
         <evaluate expression="PopulateSubjectCanonicalizationContext" />
         <evaluate expression="'proceed'" />
 
+        <transition on="proceed" to="PopulateSubjectContext" />
+    </action-state>
+
+    <action-state id="PopulateSubjectContext">
+        <evaluate expression="PopulateSubjectContext" />
+        <evaluate expression="'proceed'" />
         <transition on="proceed" to="CallSubjectCanonicalization" />
     </action-state>
 
