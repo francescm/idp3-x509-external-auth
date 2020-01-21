@@ -3,7 +3,7 @@
 # Shibboleth Idp3 X509 as External Auth
 
 ## Notes
-Works with Shibboleth Identity Provider 3.3.0.
+Works with Shibboleth Identity Provider from 3.3.0 to 3.4.5.
 
 ## Motivations
 X509 auth requires the SSLContext to be available to 
