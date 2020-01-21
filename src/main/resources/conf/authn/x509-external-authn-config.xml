@@ -60,15 +60,14 @@
             <value>
                 <![CDATA[
                 logger = Java.type("org.slf4j.LoggerFactory").getLogger("it.unimore.authn.principalNameLookupStrategy");
-                logger.info("hallo");
                 var principalName = null;
                 var subject = profileContext.getSubcontext("net.shibboleth.idp.authn.context.SubjectCanonicalizationContext").getSubject();
                 var princs = subject.getPrincipals(Java.type("net.shibboleth.idp.authn.principal.UsernamePrincipal").class);
-                logger.info("princs are: {}", princs);
+                logger.debug("princs are: {}", princs);
                 if (princs.size() == 1) {
                     principalName = princs.iterator().next().getName();
                 }
-                logger.info("principalName is: {}", principalName);
+                logger.debug("principalName is: {}", principalName);
                 principalName;
                 ]]>
             </value>
